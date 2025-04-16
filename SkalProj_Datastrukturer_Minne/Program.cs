@@ -188,7 +188,7 @@ namespace SkalProj_Datastrukturer_Minne
 
                 char nav = char.ToUpper(input[0]);
 
-                if (input.Length < 2 && nav != '-' && nav != 'P' && nav != 'B')
+                if (input.Length < 2 && nav != '-' && nav != 'B')
                 {
                     Console.WriteLine("Please provide at least one character after +.");
                     continue;
