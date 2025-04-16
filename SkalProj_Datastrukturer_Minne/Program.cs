@@ -84,7 +84,7 @@ namespace SkalProj_Datastrukturer_Minne
 
             while (true)
             {
-                Console.WriteLine("Please navigate through the menu by inputting"
+                Console.WriteLine("Please navigate through the menu by inputting:"
                     + "\n+. Type + followed by some text to add the text"
                     + "\n-. Type - followed by some text to remove the text"
                     + "\nB. To back to the main menu");
@@ -124,6 +124,8 @@ namespace SkalProj_Datastrukturer_Minne
 
                 Console.WriteLine($"Count: {theList.Count}, Capacity: {theList.Capacity}");
 
+
+            }
                 //2.När ökar listans kapacitet ? (Alltså den underliggande arrayens storlek)
                 //Listans kapacitet ökar när antalet element blir större än nuvarande kapacitet.
 
@@ -138,8 +140,6 @@ namespace SkalProj_Datastrukturer_Minne
 
                 //6.När är det då fördelaktigt att använda en egendefinierad array istället för en lista ?
                 //När vi vet exakt hur många element vi kommer att ha
-
-            }
         }
 
         /// <summary>
@@ -152,7 +152,80 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+
+            Queue<string> icaQueue = new Queue<string>();
+
+            void PrintQueue(Queue<string> queue)
+            {
+                Console.WriteLine("________ Queue list ________");
+                if (queue.Count == 0)
+                {
+                    Console.WriteLine("The queue is empty.");
+                }
+                else
+                {
+                    foreach (string name in queue)
+                    {
+                        Console.WriteLine(name);
+                    }
+                }
+            }
+
+            while (true)
+            {
+                Console.WriteLine("Please navigate through the menu by inputting:"
+                    + "\n+. Type + followed by name to add the enqueue the name"
+                    + "\n-. Type - to dequeue the first name from the queue list"
+                    + "\nB. To back to the main menu");
+
+                string input = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Input cannot be empty.");
+                    continue;
+                }
+
+                char nav = char.ToUpper(input[0]);
+
+                if (input.Length < 2 && nav != '-' && nav != 'P' && nav != 'B')
+                {
+                    Console.WriteLine("Please provide at least one character after +.");
+                    continue;
+                }
+
+                string value = input.Substring(1);
+
+
+                switch (nav)
+                {
+                    case '+':
+                        icaQueue.Enqueue(value);
+                        PrintQueue(icaQueue);
+                        break;
+                    case '-':
+                        if (icaQueue.Count > 0)
+                        {
+                            icaQueue.Dequeue();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Queue is empty. Nothing to dequeue.");
+                        }
+                        PrintQueue(icaQueue);
+                        break;
+                    case 'B':
+                        return;
+                    default:
+                        Console.WriteLine("Please use only + followed by a name, -  or B");
+                        break;
+                }
+
+
+            }
         }
+
+        
 
         /// <summary>
         /// Examines the datastructure Stack
