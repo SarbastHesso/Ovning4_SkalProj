@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Metrics;
 using System.Xml.XPath;
 
 namespace SkalProj_Datastrukturer_Minne
@@ -58,9 +59,7 @@ namespace SkalProj_Datastrukturer_Minne
             }
         }
 
-        /// <summary>
-        /// Examines the datastructure List
-        /// </summary>
+        #region ExamineList
         static void ExamineList()
         {
             /*
@@ -145,6 +144,10 @@ namespace SkalProj_Datastrukturer_Minne
         /// <summary>
         /// Examines the datastructure Queue
         /// </summary>
+        #endregion
+
+
+        #region ExamineQueue
         static void ExamineQueue()
         {
             /*
@@ -174,7 +177,7 @@ namespace SkalProj_Datastrukturer_Minne
             while (true)
             {
                 Console.WriteLine("Please navigate through the menu by inputting:"
-                    + "\n+. Type + followed by name to add the enqueue the name"
+                    + "\n+. Type + followed by name to enqueue the name"
                     + "\n-. Type - to dequeue the first name from the queue list"
                     + "\nB. To back to the main menu");
 
@@ -224,12 +227,10 @@ namespace SkalProj_Datastrukturer_Minne
 
             }
         }
+        #endregion
 
-        
 
-        /// <summary>
-        /// Examines the datastructure Stack
-        /// </summary>
+        #region ExamineStack
         static void ExamineStack()
         {
             /*
@@ -237,8 +238,105 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
-        }
+            Stack<string> icaQueue = new Stack<string>();
 
+
+            void PrintQueue(Stack<string> queue)
+            {
+                Console.WriteLine("________ Queue list ________");
+                if (queue.Count == 0)
+                {
+                    Console.WriteLine("The queue is empty.");
+                }
+                else
+                {
+                    foreach (string name in queue)
+                    {
+                        Console.WriteLine(name);
+                    }
+                }
+            }
+
+            while (true)
+            {
+                Console.WriteLine("Please navigate through the menu by inputting:"
+                    + "\n+. Type + followed by name to add the name to the list"
+                    + "\n-. Type - to remove the last name from the queue list"
+                    + "\nR. Type R to enter some text to reverse"
+                    + "\nB. To back to the main menu");
+
+                string input = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Input cannot be empty.");
+                    continue;
+                }
+
+                char nav = char.ToUpper(input[0]);
+
+                if (input.Length < 2 && nav != '-' && nav != 'B' && nav !='R')
+                {
+                    Console.WriteLine("Please provide at least one character after +.");
+                    continue;
+                }
+
+                string value = input.Substring(1);
+
+
+                switch (nav)
+                {
+                    case '+':
+                        icaQueue.Push(value);
+                        PrintQueue(icaQueue);
+                        break;
+                    case '-':
+                        if (icaQueue.Count > 0)
+                        {
+                            icaQueue.Pop();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Queue is empty. Nothing to remove.");
+                        }
+                        PrintQueue(icaQueue);
+                        break;
+                    case 'R':
+                        ReserveText();
+                        break;
+                    case 'B':
+                        return;
+                    default:
+                        Console.WriteLine("Please use only + followed by a name, -  or B");
+                        break;
+                }
+
+                static void ReserveText()
+                {
+                    Console.WriteLine("Please enter a text (at least 2 characters) to reverse");
+                    string input = Console.ReadLine();
+                    Stack<char> reservedText = new Stack<char>();
+                    if (input.Length < 2)
+                    {
+                        Console.WriteLine("Please provide at least 2 characters to reverse");
+                    }
+
+                    foreach (char c in input)
+                    {
+                        reservedText.Push(c);
+                    }
+                    while (reservedText.Count > 0)
+                    {
+                       Console.Write(reservedText.Pop());
+                    }
+                    Console.WriteLine();
+                }
+            }
+        }
+        #endregion
+
+
+        #region CheckParanthesis
         static void CheckParanthesis()
         {
             /*
@@ -247,7 +345,13 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
+            Console.WriteLine("Please enter some text with the different types of parentheses.");
+            string input = Console.ReadLine();
+
+            Console.WriteLine(input);
+
         }
+        #endregion
 
     }
 }
