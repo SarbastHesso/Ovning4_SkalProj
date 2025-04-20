@@ -10,6 +10,23 @@ namespace SkalProj_Datastrukturer_Minne
         /// The main method, vill handle the menues for the program
         /// </summary>
         /// <param name="args"></param>
+        /// 
+
+        //1. Hur fungerar stacken och heapen? Förklara gärna med exempel eller skiss på dess grundläggande funktion
+            //Stack: sparar små värden direkt i minnet, t.ex. int, bool, double, char.
+            //Exempel: int num = 5;
+            //Heap: sparar större objekt som class, array, List, string.
+            //Exempel: Car volvo = new Car();
+
+        //2. Vad är Value Types respektive Reference Types och vad skiljer dem åt?
+            //Value Types sparar värdet direkt i stacken.t.ex. int, bool, double, char
+            //Reference Types sparar en referens(pekare) till datan som ligger i heapen. t.ex. class, array, List, string.
+
+        //3. Följande metoder(se bild nedan) genererar olika svar.Den första returnerar 3, den andra returnerar 4, varför?
+            //för att x i den första är en valu type, alltså den sparar direkt och har ingen referens att påverkas på. medan i den andra är en class som är referens type och värdet ändras beroende referensen. 
+
+
+
         static void Main()
         {
 
@@ -125,20 +142,20 @@ namespace SkalProj_Datastrukturer_Minne
 
 
             }
-                //2.När ökar listans kapacitet ? (Alltså den underliggande arrayens storlek)
-                //Listans kapacitet ökar när antalet element blir större än nuvarande kapacitet.
+            //2.När ökar listans kapacitet ? (Alltså den underliggande arrayens storlek)
+            //Listans kapacitet ökar när antalet element blir större än nuvarande kapacitet.
 
-                //3.Med hur mycket ökar kapaciteten?
-                //Kapaciteten ökar med dubbelt 4 => 8
+            //3.Med hur mycket ökar kapaciteten?
+            //Kapaciteten ökar med dubbelt 4 => 8
 
-                //4.Varför ökar inte listans kapacitet i samma takt som element läggs till ?
-                //För att undvika öka kapaciteten varje gång vi lägger en ny element, då den fördubblar den istället.
+            //4.Varför ökar inte listans kapacitet i samma takt som element läggs till ?
+            //För att undvika öka kapaciteten varje gång vi lägger en ny element, då den fördubblar den istället.
 
-                //5.Minskar kapaciteten när element tas bort ur listan?
-                //Nej
+            //5.Minskar kapaciteten när element tas bort ur listan?
+            //Nej
 
-                //6.När är det då fördelaktigt att använda en egendefinierad array istället för en lista ?
-                //När vi vet exakt hur många element vi kommer att ha
+            //6.När är det då fördelaktigt att använda en egendefinierad array istället för en lista ?
+            //När vi vet exakt hur många element vi kommer att ha.
         }
 
         /// <summary>
@@ -238,6 +255,11 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+            //Varför är det inte så smart att använda en stack i det här fallet?
+            //En stack följer FILO(First In, Last Out) – vilket innebär att den sista personen i kön blir betjänad först och den första blir betjänad sist det stämmer inte med en riktig kö på Ica.
+
+
             Stack<string> icaQueue = new Stack<string>();
 
 
@@ -275,7 +297,7 @@ namespace SkalProj_Datastrukturer_Minne
 
                 char nav = char.ToUpper(input[0]);
 
-                if (input.Length < 2 && nav != '-' && nav != 'B' && nav !='R')
+                if (input.Length < 2 && nav != '-' && nav != 'B' && nav != 'R')
                 {
                     Console.WriteLine("Please provide at least one character after +.");
                     continue;
@@ -327,7 +349,7 @@ namespace SkalProj_Datastrukturer_Minne
                     }
                     while (reservedText.Count > 0)
                     {
-                       Console.Write(reservedText.Pop());
+                        Console.Write(reservedText.Pop());
                     }
                     Console.WriteLine();
                 }
@@ -348,7 +370,48 @@ namespace SkalProj_Datastrukturer_Minne
             Console.WriteLine("Please enter some text with the different types of parentheses.");
             string input = Console.ReadLine();
 
-            Console.WriteLine(input);
+            Stack<char> openedParentheses = new Stack<char>();
+
+            foreach (char c in input)
+            {
+                if (c == '(' || c == '{' || c == '[')
+                {
+                    openedParentheses.Push(c);
+                }
+                else if (c == ')' || c == '}' || c == ']')
+                {
+                    if (openedParentheses.Count == 0)
+                    {
+                        Console.WriteLine("Incorrect parentheses: Extra closing found.");
+                        return;
+                    }
+
+                    char lastOpened = openedParentheses.Pop();
+
+                    if (!IsMatching(lastOpened, c))
+                    {
+                        Console.WriteLine("Incorrect parentheses.");
+                        return;
+                    }
+                }
+
+            }
+
+            bool IsMatching(char open, char close)
+            {
+                return (open == '(' && close == ')') ||
+                       (open == '{' && close == '}') ||
+                       (open == '[' && close == ']');
+            }
+
+            if (openedParentheses.Count == 0)
+            {
+                Console.WriteLine("Correct parentheses!");
+            }
+            else
+            {
+                Console.WriteLine("Incorrect parentheses: Some were not closed.");
+            }
 
         }
         #endregion
